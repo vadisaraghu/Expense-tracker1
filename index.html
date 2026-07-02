@@ -502,7 +502,10 @@ function Settings({expenses,dark,setDark}){
 }
 
 function App(){
-  const [expenses,setExpenses]=useState(seed);
+  const [expenses, setExpenses] = useState(() => {
+  const saved = localStorage.getItem("expenses");
+ return saved ? JSON.parse(saved) : [];
+});
   const [view,setView]=useState('dashboard');
   const [dark,setDark]=useState(false);
   const [query,setQuery]=useState('');
@@ -513,7 +516,10 @@ function App(){
   const [toast,setToast]=useState(null);
   const toastTimer=useRef(null);
 
-  useEffect(()=>{ document.documentElement.classList.toggle('dark',dark); },[dark]);
+  useEffect(()=>
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+}, [expenses]);
+    {document.documentElement.classList.toggle('dark',dark); },[dark]);
 
   const pushToast=(msg)=>{ setToast(msg); clearTimeout(toastTimer.current); toastTimer.current=setTimeout(()=>setToast(null),2200); };
 
