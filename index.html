@@ -503,8 +503,12 @@ function Settings({expenses,dark,setDark}){
 
 function App(){
   const [expenses, setExpenses] = useState(() => {
-  const saved = localStorage.getItem("expenses");
- return saved ? JSON.parse(saved) : [];
+  try {
+    const saved = localStorage.getItem("expenses");
+    return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
 });
   const [view,setView]=useState('dashboard');
   const [dark,setDark]=useState(false);
