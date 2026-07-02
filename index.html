@@ -516,10 +516,15 @@ function App(){
   const [toast,setToast]=useState(null);
   const toastTimer=useRef(null);
 
-  useEffect(()=>
+  // Save expenses
+useEffect(() => {
     localStorage.setItem("expenses", JSON.stringify(expenses));
 }, [expenses]);
-    {document.documentElement.classList.toggle('dark',dark); },[dark]);
+
+// Dark mode
+useEffect(() => {
+    document.documentElement.classList.toggle('dark', dark);
+}, [dark]);
 
   const pushToast=(msg)=>{ setToast(msg); clearTimeout(toastTimer.current); toastTimer.current=setTimeout(()=>setToast(null),2200); };
 
